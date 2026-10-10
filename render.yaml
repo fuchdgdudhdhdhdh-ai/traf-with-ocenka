@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: referral-bot
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    healthCheckPath: /health
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: SUPERADMIN_IDS
+        sync: false
+      - key: CRYPTO_PAY_TOKEN
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: referral-bot-db
+          property: connectionString
+
+databases:
+  - name: referral-bot-db
+    plan: free
